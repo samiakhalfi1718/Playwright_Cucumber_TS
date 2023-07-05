@@ -3,7 +3,6 @@ import{chromium,Page,Browser, expect}from "@playwright/test";
 import{fixture}from "../../hooks/pageFixture";
 setDefaultTimeout(60 * 1000 * 2)
 Given('User navigates to the application', async function () {
-  
   await fixture.page.goto("https://bookcart.azurewebsites.net/");
 });
 
