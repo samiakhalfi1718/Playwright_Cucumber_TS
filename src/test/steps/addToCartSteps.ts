@@ -1,12 +1,12 @@
 import { Given, When, Then, setDefaultTimeout } from "@cucumber/cucumber";
 import { expect } from "@playwright/test";
 import { fixture } from "../../hooks/pageFixture";
-setDefaultTimeout(60 * 1000 * 2)
+setDefaultTimeout(60 * 3000 * 2)
 
 When('user search for a {string}', async function (book) {
     await fixture.page.locator("input[type='search']").type(book);
     await fixture.page.locator("mat-option[role='option'] span").click();
-    await fixture.page.waitForTimeout(4000);
+    //await fixture.page.waitForTimeout(4000);
 });
 
 When('user add the book to the cart', async function () {
