@@ -14,5 +14,5 @@ Feature: Add products to cart
 
     Examples:
       | username | password  | book            |
-      | ortoni   | pass1234$ | Roomies         |
-      | ortonikc | pass1234  | The Simple Wild |
+      | samia1   | S@mi@123  | Roomies         |
+      | samia2   | S@mi@123  | The Simple Wild |
