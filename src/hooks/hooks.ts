@@ -14,23 +14,41 @@ BeforeAll(async function () {
     getEnv();
     browser = await invokeBrowser();
 });
-Before(async function ({pickle}) {
-    const scenarioName=pickle.name+pickle.id;
+Before(async function ({ pickle }) {
+    const scenarioName = pickle.name + pickle.id;
     //BrowserContexts fournit un moyen d'exploiter plusieurs sessions de navigateur indépendantes
-    context = await browser.newContext();
+    context = await browser.newContext({
+        recordVideo: {
+            dir: "test-results/videos",
+        },
+    });
     const page = await browser.newPage();
     fixture.page = page;
-    fixture.logger=createLogger(options(scenarioName));
+    fixture.logger = createLogger(options(scenarioName));
 });
+
+
+
 After(async function ({ pickle, result }) {
+    let videoPath: string;
+    let img: Buffer;
     console.log(result?.status);
     //Screenshot
-    if (result?.status == Status.FAILED) {
-        const img = await fixture.page.screenshot({ path: `./test-results/screenshots/${pickle.name}.png`, type: "png" });
-        await this.attach(img, "image/png");
+    if (result?.status == Status.PASSED) {
+        img = await fixture.page.screenshot({ path: `./test-results/screenshots/${pickle.name}.png`, type: "png" });
+        //videoPath = await fixture.page.video().path();
     }
     await fixture.page.close();
     await context.close();
+    if (result?.status == Status.PASSED) {
+        await this.attach(
+            img, "image/png"
+        );
+        /*await this.attach(
+            fs.readFileSync(videoPath),
+            'video/webm'
+        );*/
+    }
 });
 AfterAll(async function () {
     await browser.close();
