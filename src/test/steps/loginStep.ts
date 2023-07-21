@@ -1,9 +1,11 @@
 import { Given ,When , Then ,setDefaultTimeout} from "@cucumber/cucumber";
 import{chromium,Page,Browser, expect}from "@playwright/test";
 import{fixture}from "../../hooks/pageFixture";
+
 setDefaultTimeout(60 * 4000 * 2)
+
 Given('User navigates to the application', async function () {
-  await fixture.page.goto("https://bookcart.azurewebsites.net/");
+  await fixture.page.goto(process.env.BASEURL as string);
   await fixture.page.waitForTimeout(4000);
 });
 

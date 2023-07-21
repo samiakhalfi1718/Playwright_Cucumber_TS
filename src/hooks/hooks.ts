@@ -1,12 +1,16 @@
 import { BeforeAll, AfterAll, Before, After, Status } from "@cucumber/cucumber";
-import { chromium, Browser, Page, BrowserContext } from "@playwright/test";
+import { Browser, BrowserContext } from "@playwright/test";
 import { fixture } from "./pageFixture";
+import { invokeBrowser } from "../helper/browsers/browsermanager";
+import { getEnv } from "../helper/env/env";
+const fs = require("fs-extra");
 
 let browser: Browser;
 let context: BrowserContext;
 
 BeforeAll(async function () {
-    browser = await chromium.launch({ headless: false });
+    getEnv();
+    browser = await invokeBrowser();
 });
 Before(async function () {
     //BrowserContexts fournit un moyen d'exploiter plusieurs sessions de navigateur indépendantes
